@@ -1,0 +1,16 @@
+- name: Ansible EC2 make VM2 
+  hosts: MyLocalVMs
+  tasks:
+    - name: Launching AWS instance using Ansible
+    ec2:
+    key_name: aws_instance_Ansible
+    instance_type: t2.small
+    image:  ami-08d4ac5b634553e16
+    region: us-east-1
+    wait: yes
+    group: Ansible
+    count: 1
+    vpc_subnet_id: default
+    assign_public_ip: 3.217.42.101
+    aws_access_key: AKIAWWPVLIAXVNZ46GXA
+    Aws_secret_key: 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
