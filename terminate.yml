@@ -1,14 +1,14 @@
 
 ---
-# - name: Delete instance
-#   hosts: VM2
-#   strategy: debug        # start a debugger on error
-#   become: yes  
-#   tasks:
-#     - name: 
-#       become: yes
-#       shell: |
-#         ec2metadata --instance-id | xargs -I {} sudo ec2kill '{}' -O AKIAWWPVLIAXRV3VGDN4 -W F2TILdQRaVArWUmp+ghqTtaRsrpFlKVo4A9fhEWZ
+- name: Delete instance
+  hosts: VM2
+  strategy: debug        # start a debugger on error
+  become: yes  
+  tasks:
+    - name: 
+      become: yes
+      shell: |
+        ec2metadata --instance-id | xargs -I {} sudo ec2kill '{}' -O AKIAWWPVLIAXRV3VGDN4 -W F2TILdQRaVArWUmp+ghqTtaRsrpFlKVo4A9fhEWZ
 
 - name: Delete instance
   hosts: VM3

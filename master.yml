@@ -1,30 +1,30 @@
-- name: Local Setup Task 1
-  hosts: MyLocalVMs       
-  become: true 
-  pre_tasks:
-    - name: install prerequisites
-      become: yes
-      become_method: sudo
-      apt: 
-        name: 
-          - python
-          - python-pip
-  tasks:
-    - name: pip install boto (AWS Interface)
-      become: yes
-      become_method: sudo
-      pip:
-        name: 
-          - boto
-          - boto3
-          - kafka-python
-          - Faker
-          - CouchDB
-    - name: Copy Python file over for VM2
-      become: yes
-      copy:
-          src: /vagrant/vagrant_workspace/hosts
-          dest: /etc/ansible/hosts
+# - name: Local Setup Task 1
+#   hosts: MyLocalVMs       
+#   become: true 
+#   pre_tasks:
+#     - name: install prerequisites
+#       become: yes
+#       become_method: sudo
+#       apt: 
+#         name: 
+#           - python
+#           - python-pip
+#   tasks:
+#     - name: pip install boto (AWS Interface)
+#       become: yes
+#       become_method: sudo
+#       pip:
+#         name: 
+#           - boto
+#           - boto3
+#           - kafka-python
+#           - Faker
+#           - CouchDB
+#     - name: Copy Python file over for VM2
+#       become: yes
+#       copy:
+#           src: /vagrant/vagrant_workspace/hosts
+#           dest: /etc/ansible/hosts
 
 - hosts: MyLocalVMs          # specified in the MyInventory file
   become: true 
@@ -154,7 +154,7 @@
         timeout: 10
     - name: Start Kafka broker
       become: true
-      shell: nohup /usr/local/kafka-server/bin/kafka-server-start.sh  /home/ubuntu/usr/local/kafka-server/config/server.properties </dev/null >/dev/null 2>&1 &
+      shell: nohup /usr/local/kafka-server/bin/kafka-server-start.sh  /usr/local/kafka-server/config/server.properties </dev/null >/dev/null 2>&1 &
 
 - name: install files on VM3
   hosts: VM3
@@ -235,6 +235,9 @@
     shell: |
       nohup python /vagrant/vagrant_workspace/new_assignment/producer_2.py -t a &
       nohup python /vagrant/vagrant_workspace/new_assignment/producer_2.py -t b &
+  - name: Sleep for 10 seconds and continue with play
+    wait_for:
+      timeout: 10
 
 
 - name: Run python job 
