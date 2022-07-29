@@ -24,7 +24,6 @@ if __name__ == "__main__":
 
     for msg in consumer:
         print("Registered User = {}".format(json.loads(msg.value)))
-        # db = couch[f'{parsed_args.topic}']
         db = couch[parsed_args.topic]
         print(db.name)
         doc = msg
