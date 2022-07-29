@@ -54,10 +54,6 @@
   become: true 
   become_method: sudo
   tasks:
-    # -name: Launching ec2_vpc_subnet
-    #   ec2_vpc_subnet:
-    #     state: present
-    #     vpc_id: vpc-07d6747bcd84a144e 
     - name: Launching AWS instance VM3 
       ec2:
         key_name: 'CloudBrokerClass'
@@ -67,7 +63,6 @@
         wait: yes
         group_id: sg-0e5c06035c079b5b8
         count: 1
-        # assign_public_ip: yes
         aws_access_key: AKIAWWPVLIAXVNZ46GXA
         aws_secret_key: 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
       register: ec2_3
@@ -97,20 +92,15 @@
         ssh-keyscan -H 54.158.65.224 >> /home/vagrant/.ssh/known_hosts
         ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com, 54.158.65.224  >> /home/vagrant/.ssh/known_hosts
         ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
-      # ssh-keygen -R ec2-3-217-42-101.compute-1.amazonaws.com
-      # ssh-keygen -R ec2-3-217-42-101.compute-1.amazonaws.com, 3.217.42.101 
-      # ssh-keygen -R ec2-54-158-65-224.compute-1.amazonaws.com
-      # ssh-keygen -R 54.158.65.224
 
 
 - name: install files on VM2 
   hosts: VM2
-  strategy: debug        # start a debugger on error
+  strategy: debug        
   become: yes  
   pre_tasks:
     - name: install prerequisites
       become: yes
-      become_method: sudo
       apt: 
         update_cache: yes
         name: 
@@ -176,6 +166,7 @@
     become: yes
     become_method: sudo
     apt: 
+      update_cache: yes
       name: 
         - default-jre
         - ec2-api-tools

@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./ansible.cfg", destination: "~/.ansible.cfg"
   config.vm.provision "file", source: "./hosts", destination: "~/.ansible/hosts"
   # config.vm.provision "file", source: "C:/Users/gokhale/.config/openstack/clouds.yaml", destination: "~/.config/openstack/clouds.yaml"
-  config.vm.provision "file", source: "C:/vagrant_workspace/CloudBrokerClass.pem", destination: "~/.ssh/CloudBrokerClass.pem"
+  config.vm.provision "file", source: "./CloudBrokerClass.pem", destination: "~/.ssh/CloudBrokerClass.pem"
   config.vm.provision "file", source: "./boto", destination: "~/.boto"
   # config.vm.provision "file", source: "C:/vagrant_workspace/CloudBrokerClass.pem", destination: "/.ssh/CloudBrokerClass.pem"
 

@@ -13,7 +13,7 @@ def parse_args():
 if __name__ == "__main__":
     parsed_args = parse_args()
     consumer = KafkaConsumer(
-        f'{parsed_args.topic}',
+        parsed_args.topic,
         bootstrap_servers='54.158.65.224:9092,3.217.42.101:9092',
         group_id = None
         # group_id=f'consumer-group-{parsed_args.topic}'
