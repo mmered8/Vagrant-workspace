@@ -91,3 +91,18 @@ sudo apt-get install couchdb
 
 > **Note**
 > The way the system works now is that the EC2 instances both run the broker just find and rely on the single zookeeper on "VM2." The VM2 is also running the consumer code which is what actually puts the information in the CouchDB on VM3. VM3 also holds a broker which is what handles most of the traffic initially. Ideally (though not specified in the class) the information would be stored around this point or filtered before now, but it depends on the type of system. The actual data is comming from a faker library. 
+
+
+
+
+> **Automatic setup**
+
+1. vagrant up --provision
+
+2. After about 20 minutes check http://54.158.65.224:5984/_utils/#
+
+3. vagrant ssh 
+    > cd /vagrant/vagrant_workspace/
+    > ansible-playbook terminate.yml 
+
+4. vagrant destroy 
