@@ -1,229 +1,229 @@
-# - name: Local Setup Task 1
-#   hosts: MyLocalVMs       
-#   become: true 
-#   pre_tasks:
-#     - name: install prerequisites
-#       become: yes
-#       become_method: sudo
-#       apt: 
-#         name: 
-#           - python
-#           - python-pip
-#   tasks:
-#     - name: pip install boto (AWS Interface)
-#       become: yes
-#       become_method: sudo
-#       pip:
-#         name: 
-#           - boto
-#           - boto3
-#           - kafka-python
-#           - Faker
-#           - CouchDB
-#     - name: Copy Python file over for VM2
-#       become: yes
-#       copy:
-#           src: /vagrant/vagrant_workspace/hosts
-#           dest: /etc/ansible/hosts
+- name: Local Setup Task 1
+  hosts: MyLocalVMs       
+  become: true 
+  pre_tasks:
+    - name: install prerequisites
+      become: yes
+      become_method: sudo
+      apt: 
+        name: 
+          - python
+          - python-pip
+  tasks:
+    - name: pip install boto (AWS Interface)
+      become: yes
+      become_method: sudo
+      pip:
+        name: 
+          - boto
+          - boto3
+          - kafka-python
+          - Faker
+          - CouchDB
+    - name: Copy Python file over for VM2
+      become: yes
+      copy:
+          src: /vagrant/vagrant_workspace/hosts
+          dest: /etc/ansible/hosts
 
-# - hosts: MyLocalVMs          # specified in the MyInventory file
-#   become: true 
-#   become_method: sudo
-#   tasks:
-#     - name: Launching AWS instance using Ansible
-#       ec2:
-#         key_name: 'CloudBrokerClass'
-#         image: ami-08d4ac5b634553e16
-#         instance_type: t2.small
-#         region: us-east-1
-#         wait: yes
-#         group_id: sg-0e5c06035c079b5b8
-#         count: 1
-#         aws_access_key: AKIAWWPVLIAXVNZ46GXA
-#         aws_secret_key: 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
-#       register: ec2_2
-#     - name: associate new elastic IPs
-#       ec2_eip:
-#         aws_access_key: AKIAWWPVLIAXVNZ46GXA
-#         aws_secret_key: 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
-#         region: us-east-1
-#         instance_id: "{{ ec2_2.instance_ids[0] }}"
-#         ip: 3.217.42.101
+- hosts: MyLocalVMs          # specified in the MyInventory file
+  become: true 
+  become_method: sudo
+  tasks:
+    - name: Launching AWS instance using Ansible
+      ec2:
+        key_name: 'CloudBrokerClass'
+        image: ami-08d4ac5b634553e16
+        instance_type: t2.small
+        region: us-east-1
+        wait: yes
+        group_id: sg-0e5c06035c079b5b8
+        count: 1
+        aws_access_key: AKIAWWPVLIAXVNZ46GXA
+        aws_secret_key: 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
+      register: ec2_2
+    - name: associate new elastic IPs
+      ec2_eip:
+        aws_access_key: AKIAWWPVLIAXVNZ46GXA
+        aws_secret_key: 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
+        region: us-east-1
+        instance_id: "{{ ec2_2.instance_ids[0] }}"
+        ip: 3.217.42.101
 
-# - hosts: MyLocalVMs          # specified in the MyInventory file
-#   become: true 
-#   become_method: sudo
-#   tasks:
-#     - name: Launching AWS instance VM3 
-#       ec2:
-#         key_name: 'CloudBrokerClass'
-#         image: ami-08d4ac5b634553e16
-#         instance_type: t2.small
-#         region: us-east-1
-#         wait: yes
-#         group_id: sg-0e5c06035c079b5b8
-#         count: 1
-#         aws_access_key: AKIAWWPVLIAXVNZ46GXA
-#         aws_secret_key: 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
-#       register: ec2_3
-#     - name: associate new elastic IPs
-#       ec2_eip:
-#         aws_access_key: AKIAWWPVLIAXVNZ46GXA
-#         aws_secret_key: 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
-#         region: us-east-1
-#         instance_id: "{{ ec2_3.instance_ids[0] }}"
-#         ip: 54.158.65.224
-#     - name: Sleep for 30 seconds and continue with play
-#       wait_for:
-#         timeout: 30
-#       delegate_to: localhost
-
-
-# - name: Local Setup Task 2 keys
-#   hosts: MyLocalVMs          # specified in the MyInventory file
-#   user: vagrant
-#   pre_tasks:
-#     - name: install keys
-#       become: yes
-#       shell: |
-#         ssh-keyscan -H 3.217.42.101 > /home/vagrant/.ssh/known_hosts
-#         ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com, 3.217.42.101  >> /home/vagrant/.ssh/known_hosts
-#         ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
-#         ssh-keyscan -H 54.158.65.224 >> /home/vagrant/.ssh/known_hosts
-#         ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com, 54.158.65.224  >> /home/vagrant/.ssh/known_hosts
-#         ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
+- hosts: MyLocalVMs          # specified in the MyInventory file
+  become: true 
+  become_method: sudo
+  tasks:
+    - name: Launching AWS instance VM3 
+      ec2:
+        key_name: 'CloudBrokerClass'
+        image: ami-08d4ac5b634553e16
+        instance_type: t2.small
+        region: us-east-1
+        wait: yes
+        group_id: sg-0e5c06035c079b5b8
+        count: 1
+        aws_access_key: AKIAWWPVLIAXVNZ46GXA
+        aws_secret_key: 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
+      register: ec2_3
+    - name: associate new elastic IPs
+      ec2_eip:
+        aws_access_key: AKIAWWPVLIAXVNZ46GXA
+        aws_secret_key: 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
+        region: us-east-1
+        instance_id: "{{ ec2_3.instance_ids[0] }}"
+        ip: 54.158.65.224
+    - name: Sleep for 30 seconds and continue with play
+      wait_for:
+        timeout: 30
+      delegate_to: localhost
 
 
-# - name: install files on VM2 
-#   hosts: VM2
-#   strategy: debug        
-#   become: yes  
-#   pre_tasks:
-#     - name: install prerequisites
-#       become: yes
-#       apt: 
-#         update_cache: yes
-#         name: 
-#           - default-jre
-#           - python3-pip
-#           - ec2-api-tools
-#   tasks:
-#     - name: pip install boto (AWS Interface)
-#       become: yes
-#       become_method: sudo
-#       pip:
-#         name: 
-#           - kafka-python
-#           - Faker
-#           - CouchDB
-#     - name: Creates directory
-#       file: path=/usr/local/kafka-download state=directory   
-#     - name: extract kafka_2.12-3.2.0.tgz 
-#       unarchive:
-#         src: https://dlcdn.apache.org/kafka/3.2.0/kafka_2.12-3.2.0.tgz
-#         dest: /usr/local/kafka-download
-#         remote_src: yes
-#     - name: move kafka_2.12-3.2.0 to kafka-server
-#       become: yes
-#       command: mv /usr/local/kafka-download/kafka_2.12-3.2.0 /usr/local/kafka-server
-#     - name: Copy server file with owner and permissions
-#       copy:
-#         src: /vagrant/vagrant_workspace/VM2_properties/server.properties
-#         dest: /usr/local/kafka-server/config/server2.properties
-#     - name: Copy zookeeper file with owner and permissions
-#       copy:
-#         src: /vagrant/vagrant_workspace/VM2_properties/zookeeper.properties
-#         dest: /usr/local/kafka-server/config/zookeeper2.properties
-#     - name: Copy Python file over for VM2
-#       copy:
-#           src: /vagrant/vagrant_workspace/VM2_properties/consumer_2.py
-#           dest: /consumer_2.py
-#     - name: modify properties files
-#       become: yes
-#       shell: |
-#         cd /usr/local/kafka-server/config/
-#         sudo rm server.properties
-#         sudo rm zookeeper.properties
-#         sudo mv /usr/local/kafka-server/config/server2.properties /usr/local/kafka-server/config/server.properties
-#         sudo mv /usr/local/kafka-server/config/zookeeper2.properties /usr/local/kafka-server/config/zookeeper.properties
-#     - name: Start Zookeeper
-#       become: true
-#       shell: nohup /usr/local/kafka-server/bin/zookeeper-server-start.sh  /usr/local/kafka-server/config/zookeeper.properties </dev/null >/dev/null 2>&1 &
-#     - name: Sleep for 10 seconds and continue with play
-#       wait_for:
-#         timeout: 10
-#     - name: Start Kafka broker
-#       become: true
-#       shell: nohup /usr/local/kafka-server/bin/kafka-server-start.sh  /usr/local/kafka-server/config/server.properties </dev/null >/dev/null 2>&1 &
+- name: Local Setup Task 2 keys
+  hosts: MyLocalVMs          # specified in the MyInventory file
+  user: vagrant
+  pre_tasks:
+    - name: install keys
+      become: yes
+      shell: |
+        ssh-keyscan -H 3.217.42.101 > /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com, 3.217.42.101  >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H 54.158.65.224 >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com, 54.158.65.224  >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
 
-# - name: install files on VM3
-#   hosts: VM3
-#   strategy: debug        # start a debugger on error
-#   become: yes  
 
-#   tasks:
-#   - name: install jre
-#     become: yes
-#     become_method: sudo
-#     apt: 
-#       update_cache: yes
-#       name: 
-#         - default-jre
-#         - ec2-api-tools
-#   - name: Creates directory
-#     file: path=/usr/local/kafka-download state=directory   
-#   - name: extract kafka_2.12-3.2.0.tgz 
-#     unarchive:
-#       src: https://dlcdn.apache.org/kafka/3.2.0/kafka_2.12-3.2.0.tgz
-#       dest: /usr/local/kafka-download
-#       remote_src: yes
-#   - name: move kafka_2.12-3.2.0 to kafka-server
-#     become: yes
-#     command: mv /usr/local/kafka-download/kafka_2.12-3.2.0 /usr/local/kafka-server
-#   - name: Copy server file with owner and permissions
-#     copy:
-#       src: /vagrant/vagrant_workspace/VM3_properties/server.properties
-#       dest: /usr/local/kafka-server/config/server2.properties
-#   - name: Copy zookeeper file with owner and permissions
-#     copy:
-#       src: /vagrant/vagrant_workspace/VM3_properties/zookeeper.properties
-#       dest: /usr/local/kafka-server/config/zookeeper2.properties
-#   - name: modify properties files
-#     become: yes
-#     shell: |
-#       cd /usr/local/kafka-server/config/
-#       sudo rm server.properties
-#       sudo rm zookeeper.properties
-#       sudo mv /usr/local/kafka-server/config/server2.properties /usr/local/kafka-server/config/server.properties
-#       sudo mv /usr/local/kafka-server/config/zookeeper2.properties /usr/local/kafka-server/config/zookeeper.properties
-#   - name: Copy zookeeper file with owner and permissions
-#     copy:
-#       src: /vagrant/vagrant_workspace/VM3_properties/local.ini
-#       dest: /local2.ini
-#   - name: install couchDB
-#     shell: |
-#       sudo apt update && sudo apt install -y curl apt-transport-https gnupg
-#       curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | sudo tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1
-#       source /etc/os-release
-#       sudo echo "deb [signed-by=/usr/share/keyrings/couchdb-archive-keyring.gpg] https://apache.jfrog.io/artifactory/couchdb-deb/ focal main" \
-#       | sudo tee /etc/apt/sources.list.d/couchdb.list >/dev/null
-#       sudo apt install debconf-utils
-#       sudo apt update
-#       sudo echo couchdb couchdb/mode    select  standalone | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/adminpass password Mygrade9 | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/adminpass_again password Mygrade9 | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/have_1x_databases       note | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/nodename        string  couchdb@localhost | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/bindaddress     string  0.0.0.0 | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/postrm_remove_databases boolean false | sudo debconf-set-selections
-#       sudo echo couchdb couchdb/cookie  string  cookiestring | sudo debconf-set-selections
-#       sudo apt install -y couchdb
-#   - name: Start Kafka broker
-#     become: true
-#     shell: nohup /usr/local/kafka-server/bin/kafka-server-start.sh  /usr/local/kafka-server/config/server.properties </dev/null >/dev/null 2>&1 &
-#   - name: Sleep for 10 seconds and continue with play
-#     wait_for:
-#       timeout: 10
+- name: install files on VM2 
+  hosts: VM2
+  strategy: debug        
+  become: yes  
+  pre_tasks:
+    - name: install prerequisites
+      become: yes
+      apt: 
+        update_cache: yes
+        name: 
+          - default-jre
+          - python3-pip
+          - ec2-api-tools
+  tasks:
+    - name: pip install boto (AWS Interface)
+      become: yes
+      become_method: sudo
+      pip:
+        name: 
+          - kafka-python
+          - Faker
+          - CouchDB
+    - name: Creates directory
+      file: path=/usr/local/kafka-download state=directory   
+    - name: extract kafka_2.12-3.2.0.tgz 
+      unarchive:
+        src: https://dlcdn.apache.org/kafka/3.2.0/kafka_2.12-3.2.0.tgz
+        dest: /usr/local/kafka-download
+        remote_src: yes
+    - name: move kafka_2.12-3.2.0 to kafka-server
+      become: yes
+      command: mv /usr/local/kafka-download/kafka_2.12-3.2.0 /usr/local/kafka-server
+    - name: Copy server file with owner and permissions
+      copy:
+        src: /vagrant/vagrant_workspace/VM2_properties/server.properties
+        dest: /usr/local/kafka-server/config/server2.properties
+    - name: Copy zookeeper file with owner and permissions
+      copy:
+        src: /vagrant/vagrant_workspace/VM2_properties/zookeeper.properties
+        dest: /usr/local/kafka-server/config/zookeeper2.properties
+    - name: Copy Python file over for VM2
+      copy:
+          src: /vagrant/vagrant_workspace/VM2_properties/consumer_2.py
+          dest: /consumer_2.py
+    - name: modify properties files
+      become: yes
+      shell: |
+        cd /usr/local/kafka-server/config/
+        sudo rm server.properties
+        sudo rm zookeeper.properties
+        sudo mv /usr/local/kafka-server/config/server2.properties /usr/local/kafka-server/config/server.properties
+        sudo mv /usr/local/kafka-server/config/zookeeper2.properties /usr/local/kafka-server/config/zookeeper.properties
+    - name: Start Zookeeper
+      become: true
+      shell: nohup /usr/local/kafka-server/bin/zookeeper-server-start.sh  /usr/local/kafka-server/config/zookeeper.properties </dev/null >/dev/null 2>&1 &
+    - name: Sleep for 10 seconds and continue with play
+      wait_for:
+        timeout: 10
+    - name: Start Kafka broker
+      become: true
+      shell: nohup /usr/local/kafka-server/bin/kafka-server-start.sh  /usr/local/kafka-server/config/server.properties </dev/null >/dev/null 2>&1 &
+
+- name: install files on VM3
+  hosts: VM3
+  strategy: debug        # start a debugger on error
+  become: yes  
+
+  tasks:
+  - name: install jre
+    become: yes
+    become_method: sudo
+    apt: 
+      update_cache: yes
+      name: 
+        - default-jre
+        - ec2-api-tools
+  - name: Creates directory
+    file: path=/usr/local/kafka-download state=directory   
+  - name: extract kafka_2.12-3.2.0.tgz 
+    unarchive:
+      src: https://dlcdn.apache.org/kafka/3.2.0/kafka_2.12-3.2.0.tgz
+      dest: /usr/local/kafka-download
+      remote_src: yes
+  - name: move kafka_2.12-3.2.0 to kafka-server
+    become: yes
+    command: mv /usr/local/kafka-download/kafka_2.12-3.2.0 /usr/local/kafka-server
+  - name: Copy server file with owner and permissions
+    copy:
+      src: /vagrant/vagrant_workspace/VM3_properties/server.properties
+      dest: /usr/local/kafka-server/config/server2.properties
+  - name: Copy zookeeper file with owner and permissions
+    copy:
+      src: /vagrant/vagrant_workspace/VM3_properties/zookeeper.properties
+      dest: /usr/local/kafka-server/config/zookeeper2.properties
+  - name: modify properties files
+    become: yes
+    shell: |
+      cd /usr/local/kafka-server/config/
+      sudo rm server.properties
+      sudo rm zookeeper.properties
+      sudo mv /usr/local/kafka-server/config/server2.properties /usr/local/kafka-server/config/server.properties
+      sudo mv /usr/local/kafka-server/config/zookeeper2.properties /usr/local/kafka-server/config/zookeeper.properties
+  - name: Copy zookeeper file with owner and permissions
+    copy:
+      src: /vagrant/vagrant_workspace/VM3_properties/local.ini
+      dest: /local2.ini
+  - name: install couchDB
+    shell: |
+      sudo apt update && sudo apt install -y curl apt-transport-https gnupg
+      curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | sudo tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1
+      source /etc/os-release
+      sudo echo "deb [signed-by=/usr/share/keyrings/couchdb-archive-keyring.gpg] https://apache.jfrog.io/artifactory/couchdb-deb/ focal main" \
+      | sudo tee /etc/apt/sources.list.d/couchdb.list >/dev/null
+      sudo apt install debconf-utils
+      sudo apt update
+      sudo echo couchdb couchdb/mode    select  standalone | sudo debconf-set-selections
+      sudo echo couchdb couchdb/adminpass password Mygrade9 | sudo debconf-set-selections
+      sudo echo couchdb couchdb/adminpass_again password Mygrade9 | sudo debconf-set-selections
+      sudo echo couchdb couchdb/have_1x_databases       note | sudo debconf-set-selections
+      sudo echo couchdb couchdb/nodename        string  couchdb@localhost | sudo debconf-set-selections
+      sudo echo couchdb couchdb/bindaddress     string  0.0.0.0 | sudo debconf-set-selections
+      sudo echo couchdb couchdb/postrm_remove_databases boolean false | sudo debconf-set-selections
+      sudo echo couchdb couchdb/cookie  string  cookiestring | sudo debconf-set-selections
+      sudo apt install -y couchdb
+  - name: Start Kafka broker
+    become: true
+    shell: nohup /usr/local/kafka-server/bin/kafka-server-start.sh  /usr/local/kafka-server/config/server.properties </dev/null >/dev/null 2>&1 &
+  - name: Sleep for 10 seconds and continue with play
+    wait_for:
+      timeout: 10
 
 - name: Run python job 
   hosts: MyLocalVMs
