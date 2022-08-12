@@ -3,8 +3,8 @@
   connection: local  # put local.  We are processing against aws
   gather_facts: False  # don't gather facts against localhost
   vars:
-    aws_access_key: 'AKIAWWPVLIAXVNZ46GXA'
-    aws_secret_key: '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'
+    aws_access_key: 'AKIAXJDPITCN3IX72L22'
+    aws_secret_key: 'KbYDRTJs2I9xkObcXS9vzSWbmVBluLAKaI5+hc7G'
     vpc_title: 'your VPC/network name'
     vpc_name: "{{ vpc_title }} VPC"
     igw_name: "{{ vpc_title }} IGW"

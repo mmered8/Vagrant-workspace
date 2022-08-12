@@ -37,18 +37,18 @@
         instance_type: t2.small
         region: us-east-1
         wait: yes
-        group_id: sg-0e5c06035c079b5b8
+        group_id: sg-08c27f5df776cc4e7
         count: 1
-        aws_access_key: AKIAWWPVLIAXVNZ46GXA
-        aws_secret_key: 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
+        aws_access_key: AKIAXJDPITCN3IX72L22
+        aws_secret_key: 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
       register: ec2_2
     - name: associate new elastic IPs
       ec2_eip:
-        aws_access_key: AKIAWWPVLIAXVNZ46GXA
-        aws_secret_key: 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
+        aws_access_key: AKIAXJDPITCN3IX72L22
+        aws_secret_key: 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
         region: us-east-1
         instance_id: "{{ ec2_2.instance_ids[0] }}"
-        ip: 3.217.42.101
+        ip: 44.199.112.155
 
 - hosts: MyLocalVMs          # specified in the MyInventory file
   become: true 
@@ -61,22 +61,19 @@
         instance_type: t2.small
         region: us-east-1
         wait: yes
-        group_id: sg-0e5c06035c079b5b8
+        group_id: sg-08c27f5df776cc4e7
         count: 1
-        aws_access_key: AKIAWWPVLIAXVNZ46GXA
-        aws_secret_key: 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
+        aws_access_key: AKIAXJDPITCN3IX72L22
+        aws_secret_key: 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
       register: ec2_3
     - name: associate new elastic IPs
       ec2_eip:
-        aws_access_key: AKIAWWPVLIAXVNZ46GXA
-        aws_secret_key: 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
+        aws_access_key: AKIAXJDPITCN3IX72L22
+        aws_secret_key: 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
         region: us-east-1
         instance_id: "{{ ec2_3.instance_ids[0] }}"
-        ip: 54.158.65.224
-    - name: Sleep for 30 seconds and continue with play
-      wait_for:
-        timeout: 30
-      delegate_to: localhost
+        ip: 54.205.194.42
+
 
 
 - name: Local Setup Task 2 keys
@@ -86,13 +83,15 @@
     - name: install keys
       become: yes
       shell: |
-        ssh-keyscan -H 3.217.42.101 > /home/vagrant/.ssh/known_hosts
-        ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com, 3.217.42.101  >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H 44.199.112.155 > /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com, 44.199.112.155  >> /home/vagrant/.ssh/known_hosts
         ssh-keyscan -H ec2-3-217-42-101.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
-        ssh-keyscan -H 54.158.65.224 >> /home/vagrant/.ssh/known_hosts
-        ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com, 54.158.65.224  >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H 54.205.194.42 >> /home/vagrant/.ssh/known_hosts
+        ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com, 54.205.194.42  >> /home/vagrant/.ssh/known_hosts
         ssh-keyscan -H ec2-54-158-65-224.compute-1.amazonaws.com >> /home/vagrant/.ssh/known_hosts
-
+    - name: Sleep for 30 seconds and continue with play
+      wait_for:
+        timeout: 30
 
 - name: install files on VM2 
   hosts: VM2

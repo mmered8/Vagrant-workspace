@@ -11,6 +11,6 @@
     group: Ansible
     count: 1
     vpc_subnet_id: default
-    assign_public_ip: 3.217.42.101
-    aws_access_key: AKIAWWPVLIAXVNZ46GXA
-    Aws_secret_key: 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
+    assign_public_ip: 44.199.112.155
+    aws_access_key: AKIAXJDPITCN3IX72L22
+    Aws_secret_key: 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

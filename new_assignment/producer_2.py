@@ -14,14 +14,14 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-producer = KafkaProducer(bootstrap_servers='54.158.65.224:9092,3.217.42.101:9092',
+producer = KafkaProducer(bootstrap_servers='54.205.194.42:9092,44.199.112.155:9092',
                          value_serializer=json_serializer)
 
 if __name__ == "__main__":
     parsed_args = parse_args()
 
     try:
-        couch = couchdb.Server('http://54.158.65.224:5984/')
+        couch = couchdb.Server('http://54.205.194.42:5984/')
         couch.resource.credentials = ('admin', 'Mygrade9')
         db = couch[parsed_args.topic]
     except:

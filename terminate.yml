@@ -8,7 +8,7 @@
     - name: 
       become: yes
       shell: |
-        ec2metadata --instance-id | xargs -I {} sudo ec2kill '{}' -O AKIAWWPVLIAXRV3VGDN4 -W F2TILdQRaVArWUmp+ghqTtaRsrpFlKVo4A9fhEWZ
+        ec2metadata --instance-id | xargs -I {} sudo ec2kill '{}' -O AKIAXJDPITCN3IX72L22 -W KbYDRTJs2I9xkObcXS9vzSWbmVBluLAKaI5+hc7G
 
 - name: Delete instance
   hosts: VM3
@@ -18,4 +18,4 @@
     - name: 
       become: yes
       shell: |
-        ec2metadata --instance-id | xargs -I {} sudo ec2kill '{}' -O AKIAWWPVLIAXRV3VGDN4 -W F2TILdQRaVArWUmp+ghqTtaRsrpFlKVo4A9fhEWZ
+        ec2metadata --instance-id | xargs -I {} sudo ec2kill '{}' -O AKIAXJDPITCN3IX72L22 -W KbYDRTJs2I9xkObcXS9vzSWbmVBluLAKaI5+hc7G

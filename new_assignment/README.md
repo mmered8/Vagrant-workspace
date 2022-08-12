@@ -99,7 +99,7 @@ sudo apt-get install couchdb
 
 1. vagrant up --provision
 
-2. After about 20 minutes check http://54.158.65.224:5984/_utils/#
+2. After about 20 minutes check http://54.205.194.42:5984/_utils/#
 
 3. vagrant ssh 
     > cd /vagrant/vagrant_workspace/
